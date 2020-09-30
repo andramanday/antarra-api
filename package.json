@@ -1,0 +1,27 @@
+{
+  "name": "node-api-home",
+  "version": "1.0.0",
+  "description": "home learned",
+  "main": "index.js",
+  "author": "andramanday",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon --exec babel-node app.js"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5"
+  }
+}
