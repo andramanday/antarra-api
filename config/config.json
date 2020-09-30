@@ -3,7 +3,7 @@
     "username": "root",
     "password": "P@ssw0rd",
     "database": "antarra_dbs",
-    "host": "127.0.0.1",
+    "host": "172.18.135.223",
     "dialect": "mysql"
   },
   "test": {

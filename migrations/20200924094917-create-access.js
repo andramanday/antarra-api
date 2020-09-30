@@ -21,6 +21,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(256)
       },
+      api_ip: {
+        allowNull: false,
+        type: Sequelize.STRING(20)
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

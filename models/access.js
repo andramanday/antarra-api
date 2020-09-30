@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
   access.init({
     api_user: DataTypes.STRING,
     api_pass: DataTypes.TEXT,
-    api_key: DataTypes.TEXT
+    api_key: DataTypes.TEXT,
+    api_ip: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'access',
