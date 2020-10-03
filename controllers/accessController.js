@@ -5,6 +5,7 @@ import rsp from '../config/response';
 import {setPassword , validPassword} from '../config/cryptoParse';
 
 const access = model.access;
+const user = model.user;
 
 class Access {
 
@@ -29,7 +30,8 @@ class Access {
     }
 
     static login(req, res){
-        const { api_user, api_pass } = req.body;
+        const { api_user, api_pass} = req.body
+
         let api_ip = req.ip;
         if (api_ip.substr(0, 7) == "::ffff:") {
             api_ip = api_ip.substr(7)
@@ -40,14 +42,64 @@ class Access {
             })
             .then(data => {
                 if(data){
-                    if(data.api_ip != api_ip){
-                        rsp.error('your credentials is not valid', res, '103');
+                    if(data.api_ip != '*'){
+                        if(data.api_ip != api_ip){
+                            rsp.error('your credentials is not valid', res, '103');
+                        }
                     }
                     if( validPassword(data.api_pass, api_pass)) {
                         const token = jwt.sign({ id: data.id }, process.env.JWT_KEY, { expiresIn: '1h' });
                         const dt ={data, token};
 
+
+
                         rsp.ok(dt, `Welcome back ${data.api_user}`, res);
+                    }else{
+                        rsp.error('your credentials is not valid', res, '102');
+                    }
+                }else{
+                    rsp.error('your credentials is not valid', res, '101');
+                }
+            } 
+        ).catch(error => {
+            rsp.error(error.errors[0].message, res);
+        });
+    }
+
+    static loginwithemployee(req, res){
+        const { api_user, api_pass} = req.headers;
+        const { pernr, kostl, hilfm } = req.body.request;
+        let api_ip = req.ip;
+        if (api_ip.substr(0, 7) == "::ffff:") {
+            api_ip = api_ip.substr(7)
+        }
+        return access
+            .findOne({
+                where: {api_user},
+            })
+            .then(access => {
+                if(access){
+                    if(access.api_ip != '*'){
+                        if(access.api_ip != api_ip){
+                            rsp.error('your credentials is not valid', res, '103');
+                        }
+                    }
+                    if( validPassword(access.api_pass, api_pass)) {
+
+                        user.findOne({where : {pernr,kostl,hilfm}})
+                        .then(login => {
+                            if(login){
+                                if(login.status != 1){
+                                    rsp.error('id user tidak aktif', res);
+                                }
+                                const token = jwt.sign({ id: access.id, login_id : login.id }, process.env.JWT_KEY, { expiresIn: '1h' });
+                                const dt ={access, login, token};
+                                rsp.ok(dt, `Welcome back ${access.api_user}`, res);
+                            }else{
+                                rsp.error('user tidak ditemukan', res);
+                            }
+                        });
+
                     }else{
                         rsp.error('your credentials is not valid', res, '102');
                     }

@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 import model from '../models'
 
 const Access = model.access;
+const User = model.user;
 
 const auth = async(req, res, next) => {
     //api-key
@@ -18,17 +19,26 @@ const auth = async(req, res, next) => {
     try {
         const data = jwt.verify(token, process.env.JWT_KEY);
         const access = await Access.findOne({where : { id: data.id}})
+        const login = await User.findOne({where : { id: data.login_id}})
         if (!access) {
             throw new Error()
         }
-        if(access.api_ip != ip){
-            res.status(401).send('Access Denied');
+        if(access.api_ip != '*'){
+            if(access.api_ip != ip){
+                res.status(401).send('Access Denied');
+            }
         }
+        
         req.access = access
+        req.login = login
         req.token = token
         next()
     } catch (error) {
-        res.status(401).send({ error: 'Not authorized to access this resource' })
+        res.status(401).send({ 
+            error: true,
+            code : 401,
+            message: 'Not authorized to access this resource' 
+        })
     }
 }
 

@@ -1,24 +1,32 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('role_logins', {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      uker: {
-        allowNull: false,
-        type: Sequelize.STRING
+      pernr: {
+        type: Sequelize.STRING(10)
       },
-      level: {
+      kostl: {
+        type: Sequelize.STRING(10)
+      },
+      hilfm: {
+        type: Sequelize.STRING(10)
+      },
+      status: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      roleID: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
-        primaryKey: true,
         type: Sequelize.DATE
       },
       updatedAt: {
@@ -27,14 +35,14 @@ module.exports = {
       }
     });
     await queryInterface.addIndex(
-      'role_logins',
-      ['uker', 'level'],
-      {
-        unique: true,
-      }
+        'users',
+        ['pernr', 'kostl', 'hilfm'],
+        {
+          unique: true,
+        }
     );
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('role_logins');
+    await queryInterface.dropTable('users');
   }
 };
