@@ -3,6 +3,7 @@
 exports.ok = function(datas, msg, res) {
     var data = {
         'error' : false,
+        'status' : 'success',
         'code': 201,
         'message': msg,
         'record': datas.length,
@@ -15,6 +16,7 @@ exports.ok = function(datas, msg, res) {
 exports.error = function(msg, res, errorkode = 401) {
     var data = {
         'error' : true,
+        'status' : 'error',
         'code': errorkode,
         'message': msg,
         'data' : []

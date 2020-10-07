@@ -1,12 +1,19 @@
 import model from '../models/index';
 import rsp from '../config/response';
+import dummy from './data';
+const {
+    Model, Sequelize
+  } = require('sequelize');
+// const db = new Sequelize(...);
 
 const user = model.user;
+const test = model.test;
 
 class User {
 
     static create(req, res){
         const { pernr, kostl, hilfm, status, roleID } = req.body;
+        // res.status(201).send(req.body)
         return user
             .create({
                 pernr,
@@ -14,10 +21,11 @@ class User {
                 hilfm,
                 status,
                 roleID
-            }).then(data => {
+            })
+            .then(data => {
                 rsp.ok(data, `User ${pernr} - ${kostl} - ${hilfm}  has been created successfully `, res);
-            }).catch(error => {
-                rsp.error(error.errors[0].message, res);
+            }).catch(err => {
+                rsp.error(err.errors[0].message, res);
             });
     }
     
@@ -62,6 +70,16 @@ class User {
             }).catch(error => {
                 rsp.error(error.errors[0].message, res);
             });
+    }
+
+    static test(req, res) {
+        const hasil = test.test();
+
+        if(hasil.error){
+            rsp.error(hasil.msg, res);
+        }else{
+            rsp.ok(hasil.msg, `sukse`, res);
+        }
     }
 }
 

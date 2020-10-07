@@ -1,6 +1,6 @@
 const auth = require('../middleware/auth');
 import Access from '../controllers/accessController';
-import Role from '../controllers/roleController';
+// import Role from '../controllers/roleController';
 import User from '../controllers/userController';
 
 export default (app) => {
@@ -19,7 +19,8 @@ export default (app) => {
     app.put('/user', auth, User.update);
     app.delete('/user/:id', auth, User.deleteby);
 
-    app.post('/rolelogin', auth, Role.roleLogin);
+    app.get('/test', User.test);
+    // app.post('/rolelogin', auth, Role.roleLogin);
     
     // app.get('/user/:id', auth, Access.getByid);
     // app.put('/user/:id', auth, Access.update);

@@ -19,3 +19,4 @@ class Role {
         // console.log(login);
         // return res.status(201).send({login});
     }
+}

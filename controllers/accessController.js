@@ -86,7 +86,7 @@ class Access {
                     }
                     if( validPassword(access.api_pass, api_pass)) {
 
-                        user.findOne({where : {pernr,kostl,hilfm}})
+                        user.findOne({where : {pernr,kostl,hilfm, status: 1}})
                         .then(login => {
                             if(login){
                                 if(login.status != 1){
@@ -108,7 +108,7 @@ class Access {
                 }
             } 
         ).catch(error => {
-            rsp.error(error.errors[0].message, res);
+            rsp.error(error, res);
         });
     }
 

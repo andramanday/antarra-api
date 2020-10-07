@@ -9,7 +9,7 @@ const PORT = process.env.PORT
 
 const model = require('./models/');
 
-app.use(cors());
+// app.use(cors());
 app.use(logger('dev'));
 // app.use(`/${process.env.IMG_ROOT}/`, express.static('app/public/uploads'));
 app.use(bodyParser.json());

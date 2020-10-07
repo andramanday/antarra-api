@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const rsp = require('../config/response');
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -12,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+
   };
   user.init({
     pernr: DataTypes.STRING,
